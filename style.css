@@ -1,0 +1,1062 @@
+* {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+/* Banner */
+.banner {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(100%);
+}
+
+.banner-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+}
+
+.banner-text h1 {
+  font-size: 2.5em;
+  margin: 0;
+}
+
+.banner-text p {
+  font-size: 1.2em;
+}
+
+/* Animated Pets Section */
+.animated-pets {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 40px;
+  background: #fff8e1;
+}
+
+.pet-box {
+  text-align: center;
+  width: 200px;
+}
+
+.pet-box img {
+  width: 150px;
+  transition: transform 0.4s;
+}
+
+.pet-box img:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.pet-box p {
+  margin-top: 10px;
+  font-style: italic;
+  font-size: 0.9em;
+  color: #555;
+}
+
+
+
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fffaf0;
+}
+
+header {
+  background: #ff7700;
+  padding: 15px;
+  color: white;
+  text-align: center;
+}
+
+.cart-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.cart-icon {
+  height: 25px;
+  width: 25px;
+}
+
+nav a {
+  margin: 0 10px;
+  color: rgb(138, 0, 251);
+  text-decoration: none;
+  position: relative;
+  font-size: 20px;
+  text-align: left;
+  padding: 10px 20px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+  color: #ffe0b2;
+}
+
+
+.hero {
+  text-align: center;
+  padding: 50px;
+  background: #ffe0b2;
+}
+
+.pet-list {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.pet-card {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  width: 200px;
+}
+
+.pet-card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.form-container {
+  max-width: 400px;
+  margin: 20px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+form input, form textarea, form button {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+
+
+
+.pet-list {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap; /* makes cards wrap to next line if screen is small */
+}
+
+.pet-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  text-align: center;
+  width: 220px;     /* fixed width */
+  height: 320px;    /* fixed height */
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* keeps spacing neat */
+}
+
+.pet-card img {
+  width: 100%;
+  height: 180px;    /* fixed height for images */
+  object-fit: cover; /* crops image nicely */
+  border-radius: 10px;
+}
+
+
+
+/* 🌙 Dark Mode Fix */
+body.dark-mode {
+  background-color: #121212 !important;
+  color: white !important;
+}
+
+body.dark-mode header {
+  background-color: #1e1e1e !important;
+}
+
+body.dark-mode nav a {
+  color: #ffd74d !important;
+}
+
+body.dark-mode footer {
+  background-color: #1e1e1e !important;
+  color: #ffb74d !important;
+}
+
+body.dark-mode .pet-box {
+  background-color: #222 !important;
+}
+body.dark-mode .animated-pets {
+  background: #616161 !important;
+}
+
+
+
+
+
+
+---------------------------------------------------
+
+
+
+
+
+/* Root Colors */
+:root {
+  --bg-color: #fefefe;
+  --text-color: #333;
+  --header-bg: #ff7f50;
+  --nav-link: white;
+  --card-bg: #fff7f0;
+  --footer-bg: #ff7f50;
+  --btn-bg: #ff7f50;
+}
+
+body.dark-mode {
+  --bg-color: #121212;
+  --text-color: #f5f5f5;
+  --header-bg: #1f1f1f;
+  --nav-link: #f5f5f5;
+  --card-bg: #1e1e1e;
+  --footer-bg: #1f1f1f;
+  --btn-bg: #ff7f50;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: all 0.5s ease;
+}
+
+/* Dark Mode Button */
+.dark-mode-btn {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 10px 16px;
+  background: var(--btn-bg);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 100;
+  transition: transform 0.2s, background 0.3s;
+}
+
+.dark-mode-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Header & Navbar */
+header {
+  background: var(--header-bg);
+  padding: 20px 0;
+  text-align: center;
+  color: var(--nav-link);
+}
+
+header h1 {
+  margin: 0 0 10px;
+  font-size: 2.5rem;
+  animation: fadeDown 1s ease forwards;
+}
+
+nav a {
+  margin: 0 15px;
+  color: var(--nav-link);
+  text-decoration: none;
+  font-weight: bold;
+  position: relative;
+  transition: color 0.3s;
+}
+
+nav a::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: white;
+  transition: width 0.3s;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+nav a:hover {
+  color: #ffe6cc;
+}
+
+/* Pet Cards */
+.pet-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  padding: 30px 10px;
+}
+
+.pet-card {
+  background: var(--card-bg);
+  width: 220px;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.5s forwards;
+}
+
+.pet-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.pet-card h3 {
+  margin: 10px 0 5px;
+}
+
+.pet-card p {
+  margin: 3px 0;
+  font-weight: bold;
+}
+
+.pet-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+}
+
+/* Footer */
+footer {
+  background: var(--footer-bg);
+  text-align: center;
+  padding: 15px 0;
+  color: var(--nav-link);
+  margin-top: 30px;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+--------------------------------------------------------------
+
+/* Reuse same root variables for dark mode */
+:root {
+  --bg-color: #fefefe;
+  --text-color: #333;
+  --header-bg: #ff7f50;
+  --nav-link: white;
+  --card-bg: #fff7f0;
+  --footer-bg: #ff7f50;
+  --btn-bg: #ff7f50;
+}
+
+body.dark-mode {
+  --bg-color: #121212;
+  --text-color: #f5f5f5;
+  --header-bg: #1f1f1f;
+  --nav-link: #f5f5f5;
+  --card-bg: #1e1e1e;
+  --footer-bg: #1f1f1f;
+  --btn-bg: #ff7f50;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: all 0.5s ease;
+}
+
+/* Dark Mode Button */
+.dark-mode-btn {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 10px 16px;
+  background: var(--btn-bg);
+  color: rgb(0, 0, 0);
+  background-color: #e7e3e3;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 100;
+  transition: transform 0.2s, background 0.3s;
+}
+
+.dark-mode-btn:hover {
+  transform: scale(1.05);
+   background: #ff4d1a;
+}
+
+/* Header & Navbar */
+header {
+  background: var(--header-bg);
+  padding: 20px 0;
+  text-align: center;
+  color: var(--nav-link);
+}
+
+header h1 {
+  margin: 0 0 10px;
+  font-size: 2.5rem;
+  animation: fadeDown 1s ease forwards;
+}
+
+nav a {
+  margin: 0 15px;
+  color: var(--nav-link);
+  text-decoration: none;
+  font-weight: bold;
+  position: relative;
+  transition: color 0.3s;
+}
+
+nav a::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: white;
+  transition: width 0.3s;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+nav a:hover {
+  color: #ffe6cc;
+}
+
+/* Form Container */
+.form-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  background: var(--card-bg);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.7s forwards;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+input, textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border 0.3s, background 0.3s, color 0.3s;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #ff7f50;
+}
+
+button[type="submit"] {
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: var(--btn-bg);
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s;
+}
+
+button[type="submit"]:hover {
+  transform: scale(1.05);
+  background: #ff4d1a;
+}
+
+/* Footer */
+footer {
+  background: var(--footer-bg);
+  text-align: center;
+  padding: 15px 0;
+  color: var(--nav-link);
+  margin-top: 30px;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+------------------------------------------------------------------
+
+
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: var(--header-bg);
+  color: var(--nav-link);
+}
+
+.navbar .logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.navbar .nav-links {
+  list-style: none;
+  display: flex; 
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar .nav-links li a {
+  text-decoration: none;
+  color: var(--nav-link);
+  font-weight: bold;
+  position: relative;
+  padding: 5px 0;
+  transition: color 0.3s;
+}
+
+.navbar .nav-links li a::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: white;
+  transition: width 0.3s;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.navbar .nav-links li a:hover::after {
+  width: 100%;
+}
+
+.navbar .nav-links li a.active {
+  color: #ffe6cc;
+}
+
+.dark-toggle {
+  background: var(--btn-bg);
+  border: none;
+  color: rgb(3, 3, 3);
+  background-color: #e7e3e3;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s;
+}
+
+.dark-toggle:hover {
+  transform: scale(1.05);
+  background: #ff4d1a;
+}
+
+/* Banner */
+
+/* Food Container */
+.food-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  padding: 20px;
+}
+
+.food-card {
+  background: var(--card-bg);
+  width: 220px;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.5s forwards;
+}
+
+.food-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.food-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+}
+
+.add-to-cart {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  background: var(--btn-bg);
+  color: rgb(10, 7, 7);
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s;
+}
+
+.add-to-cart:hover {
+  transform: scale(1.05);
+  background: #ff4d1a;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 15px 0;
+  background: var(--footer-bg);
+  color: var(--nav-link);
+  margin-top: 30px;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+
+/*-------------------------------------------------------------------------------*/
+
+/* -----------------------
+   Animated Pets - enlarge + float animation
+   ----------------------- */
+.animated-pets {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 40px !important;            /* a bit more space */
+  padding: 60px 20px !important;   /* larger section */
+  background: #fff8e1;             /* keep existing bg */
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+/* make each pet box larger and more card-like */
+.animated-pets .pet-box {
+  width: 300px !important;         /* larger card */
+  padding: 18px !important;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* bigger images inside cards */
+.animated-pets .pet-box img {
+  width: 260px !important;
+  height: 260px !important;
+  object-fit: cover !important;
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+/* hover lift + slight rotate for playfulness */
+.animated-pets .pet-box:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.16);
+}
+.animated-pets .pet-box:hover img {
+  transform: scale(1.03) rotate(-1deg);
+  filter: brightness(1.02);
+}
+
+/* floating animation (gentle up/down) */
+@keyframes petFloat {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+.animated-pets .pet-box img {
+  animation: petFloat 5.5s ease-in-out infinite;
+}
+
+/* quote styling */
+.animated-pets .pet-box p {
+  margin-top: 12px;
+  font-style: italic;
+  color: #444;
+  text-align: center;
+  line-height: 1.3;
+  padding: 0 6px;
+}
+
+/* responsive shrink for small screens */
+@media (max-width: 800px) {
+  .animated-pets .pet-box {
+    width: 90% !important;
+  }
+  .animated-pets .pet-box img {
+    width: 100% !important;
+    height: auto !important;
+    animation: none; /* disable float on small devices to avoid jank */
+  }
+}
+
+/* -----------------------
+   Footer enlarge + subtle animation
+   ----------------------- */
+footer {
+  padding: 30px 20px !important;   /* larger vertical padding */
+  background: linear-gradient(90deg, #ff8a00 0%, #ffb347 100%);
+  color: #fff;
+  text-align: center;
+  font-size: 1.05rem;
+  position: relative;
+  overflow: hidden;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  box-shadow: 0 -6px 18px rgba(0,0,0,0.08);
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+/* subtle glowing pulse behind footer */
+footer::before {
+  content: "";
+  position: absolute;
+  left: -25%;
+  top: -40%;
+  width: 150%;
+  height: 200%;
+  background: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.12), rgba(255,255,255,0) 30%);
+  transform: rotate(-15deg);
+  opacity: 0.6;
+  pointer-events: none;
+  animation: footerGlow 6s ease-in-out infinite;
+}
+
+/* glow animation */
+@keyframes footerGlow {
+  0%   { transform: translateX(-10%) scale(1) rotate(-15deg); opacity: 0.45; }
+  50%  { transform: translateX(10%) scale(1.02) rotate(-15deg); opacity: 0.7; }
+  100% { transform: translateX(-10%) scale(1) rotate(-15deg); opacity: 0.45; }
+}
+
+/* small hover lift for footer when mouse over (subtle) */
+footer:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 -12px 30px rgba(0,0,0,0.12);
+}
+
+/* footer text and contact link styling */
+footer p {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* dark mode footer override (if body.dark-mode exists) */
+body.dark-mode footer {
+  background: linear-gradient(90deg, #222, #333);
+  color: #f1c47a;
+}
+body.dark-mode footer::before {
+  background: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.03), rgba(255,255,255,0) 30%);
+  opacity: 0.35;
+}
+
+/* ensure cart-count and other nav items still visible on dark */
+body.dark-mode .cart-count,
+body.dark-mode .logo {
+  color: #ffd79e;
+}
+
+
+
+
+/*-------------------------------------------------------------*/
+
+/* Modal backdrop and popup */
+.pet-popup-backdrop {
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  background: rgba(0,0,0,0.45); /* dim */
+  -webkit-backdrop-filter: blur(0); /* no browser-level blur needed for content (we blur page children) */
+  animation: petFadeIn 180ms ease;
+  padding: 20px;
+}
+
+/* Popup card */
+.pet-popup {
+  width: min(900px, 95vw);
+  max-height: 90vh;
+  overflow: auto;
+  background: #fff;
+  border-radius: 12px;
+  display: flex;
+  gap: 18px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  padding: 18px;
+  align-items: flex-start;
+  transform: translateY(10px);
+  animation: petPop 200ms ease;
+}
+
+/* image side */
+.pp-image {
+  flex: 0 0 320px;
+  max-width: 320px;
+}
+.pp-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+  object-fit: cover;
+}
+
+/* body side */
+.pp-body {
+  flex: 1 1 auto;
+  min-width: 180px;
+}
+.pp-body h3 {
+  margin: 0 0 8px 0;
+  font-size: 22px;
+}
+.pp-quote {
+  margin: 6px 0 14px 0;
+  line-height: 1.45;
+  color: #333;
+}
+
+/* controls */
+.pp-controls {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+.pp-controls .pp-adopt,
+.pp-controls .pp-close,
+.pp-play {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+.pp-adopt {
+  background: #ff914d;
+  color: #fff;
+}
+.pp-close {
+  background: #eee;
+  color: #222;
+}
+.pp-play {
+  background: transparent;
+  border: 1px solid #ccc;
+  margin-left: 8px;
+}
+
+/* small audio note */
+.pp-audionote {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #666;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* page blur while modal open - this excludes the backdrop itself so the backdrop remains sharp */
+body.pet-popup-open > *:not(.pet-popup-backdrop) {
+  filter: blur(6px) saturate(0.95);
+  pointer-events: none; /* block clicks on background */
+  user-select: none;
+  transition: filter 160ms ease;
+}
+
+/* prevent scrollbars shifting layout - keep body overflow hidden in JS */
+
+/* animations */
+@keyframes petPop {
+  from { transform: translateY(18px) scale(0.99); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes petFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* responsive */
+@media (max-width: 720px) {
+  .pet-popup { flex-direction: column; padding: 12px; }
+  .pp-image { width: 100%; max-width: 100%; }
+  .pp-body { width: 100%; }
+}
+
+.product-card div {
+  color: #000;
+}
+ 
+
+/*------------------------------------*/
+
+.animated-pets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.pet-box {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.media {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.media img,
+.media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.sound-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.6);
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.sound-btn:hover {
+  background: rgba(0,0,0,0.8);
+}
