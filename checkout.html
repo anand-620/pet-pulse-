@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Checkout — Pet Care</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{
+      --accent: #ff8d57;
+      --accent-dark: #ff7a3d;
+      --muted: #6b6b6b;
+      --bg: #fbf7f5;
+      --card: #fff;
+      --radius: 12px;
+      --max-width: 1100px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(120deg,#fffaf8,#fff1e6);
+      color:#222;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    nav{
+      background: var(--accent);
+      color: white;
+      padding: 12px 16px;
+      text-align:center;
+      font-weight:700;
+    }
+    nav a{ color: #fff; text-decoration:none; margin:0 10px; font-weight:700; }
+    .page { max-width: var(--max-width); margin: 26px auto; padding: 0 16px 40px; }
+    .page h1{ text-align:center; color: var(--accent); font-size: 36px; margin: 6px 0 26px; }
+    .checkout-grid { display: grid; grid-template-columns: 1fr 380px; gap: 26px; align-items: start; min-height: 380px; }
+    .card { background: var(--card); padding: 18px; border-radius: var(--radius); box-shadow: 0 8px 26px rgba(0,0,0,0.06); }
+    label { display:block; margin-top:12px; font-weight:600; color:#333; }
+    input[type="text"], input[type="tel"], textarea, select {
+      width:100%; padding:10px 12px; margin-top:6px; border-radius:8px; border:1px solid #e8e1df; font-size:15px; background:#fff;
+    }
+    textarea{ resize:vertical; min-height:80px }
+    .payment-row { display:flex; gap:12px; margin-top:10px; align-items:center; flex-wrap:wrap; }
+    .radio { display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:10px; border:1px solid #eee; cursor:pointer; transition: all 140ms; background: #faf8f7; }
+    .radio input { transform:scale(1.05); }
+    .radio.active { border-color: var(--accent); box-shadow: 0 6px 18px rgba(255,140,87,0.08); background: #fff; }
+    .muted { color: var(--muted); font-size:14px; }
+    .btn { display:inline-block; background: var(--accent); color:#fff; border:none; padding:10px 16px; border-radius:10px; cursor:pointer; font-weight:700; margin-top:16px; }
+    .btn.secondary { background:transparent; color:var(--accent); border:1px solid #f0d6c6; }
+    .order-summary { position: sticky; top:22px; }
+    .order-summary .summary-item { display:flex; justify-content:space-between; margin-bottom:10px; color:#333; }
+    .summary-total { font-weight:900; font-size:20px; margin-top:8px; display:flex; justify-content:space-between; align-items:center; }
+    .order-items { margin-top:12px; max-height:320px; overflow:auto; padding-right:6px; }
+    .order-item { display:flex; justify-content:space-between; gap:12px; padding:10px 0; border-bottom:1px dashed #f0e3dc; align-items:center; }
+    .order-item .left { display:flex; gap:10px; align-items:center; min-width:0; }
+    .order-item img { width:64px; height:48px; object-fit:cover; border-radius:8px; }
+    .oi-name { font-weight:700; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .qr-panel { margin-top:14px; padding:12px; border-radius:10px; background:#fff8f6; border:1px solid #ffe6d8; display:flex; flex-direction:column; gap:12px; align-items:center; }
+    .qr-svg { width:180px; height:180px; background:#fff; border-radius:8px; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+    .upi-id { font-weight:700; color:var(--accent-dark); }
+    .msg { margin-top:12px; padding:12px; border-radius:8px; background:#e8fff1; color:#066a42; font-weight:700; }
+    @media (max-width: 880px){ .checkout-grid { grid-template-columns: 1fr; } .order-summary { position:relative; top:auto; margin-top:8px; } .qr-svg { width:140px; height:140px; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">Home</a> •
+    <a href="pets.html">Pets</a> •
+    <a href="petfood.html">Pet Food</a> •
+    <a href="cart.html">Cart</a>
+  </nav>
+
+  <div class="page">
+    <h1>Checkout</h1>
+
+    <div class="checkout-grid">
+
+      <!-- LEFT: Delivery & Payment Form -->
+      <section class="card checkout-form" id="checkoutCard">
+        <h2 style="margin:0 0 8px">Delivery & Payment</h2>
+        <form id="checkoutForm" autocomplete="on">
+          <label for="name">Full name</label>
+          <input id="name" type="text" placeholder="Your full name" required>
+
+          <label for="phone">Phone number</label>
+          <input id="phone" type="tel" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
+
+          <label for="address">Delivery address</label>
+          <textarea id="address" placeholder="House no, street, city, PIN" required></textarea>
+
+          <label style="margin-top:14px">Payment method</label>
+          <div class="payment-row" id="paymentRow">
+            <label class="radio" data-val="cod"><input type="radio" name="pay" value="cod" checked> Cash on Delivery (COD)</label>
+            <label class="radio" data-val="upi"><input type="radio" name="pay" value="upi"> UPI</label>
+          </div>
+
+          <!-- hidden area where QR will appear (when UPI chosen) -->
+          <div id="upiArea" style="display:none;">
+            <div class="qr-panel" id="qrPanel">
+              <div class="qr-svg" id="qrSvgContainer">
+                <svg viewBox="0 0 100 100" width="140" height="140" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="100" height="100" fill="#fff"/>
+                  <rect x="6" y="6" width="24" height="24" fill="#111"/>
+                  <rect x="70" y="6" width="24" height="24" fill="#111"/>
+                  <rect x="6" y="70" width="24" height="24" fill="#111"/>
+                  <rect x="36" y="36" width="8" height="8" fill="#111"/>
+                  <rect x="48" y="36" width="8" height="8" fill="#111"/>
+                  <rect x="36" y="48" width="8" height="8" fill="#111"/>
+                  <rect x="66" y="36" width="8" height="8" fill="#111"/>
+                  <rect x="36" y="66" width="8" height="8" fill="#111"/>
+                </svg>
+              </div>
+
+              <div style="text-align:center">
+                <div class="muted">Scan to pay UPI</div>
+                <div class="upi-id" id="upiIdText">yourupi@bank</div>
+                <div class="muted" style="font-size:13px">Amount will be <span id="qrAmount">₹0</span></div>
+              </div>
+
+              <div style="display:flex; gap:10px;">
+                <button type="button" id="confirmUpiBtn" class="btn">I have paid</button>
+                <button type="button" id="cancelUpiBtn" class="btn secondary">Cancel</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="formError" class="muted" style="margin-top:10px;"></div>
+
+          <button type="submit" class="btn" id="placeOrderBtn">Place Order</button>
+        </form>
+
+        <div id="successMsg" style="display:none" class="msg"></div>
+      </section>
+
+      <!-- RIGHT: Order Summary -->
+      <aside class="order-summary card">
+        <h3 style="margin:0 0 8px">Order Summary</h3>
+        <div class="order-items" id="orderItems">
+          <!-- items injected here -->
+        </div>
+
+        <div class="summary-item"><span>Subtotal</span><span id="sumSubtotal">₹0</span></div>
+        <div class="summary-item"><span>Shipping</span><span id="sumShipping">₹0</span></div>
+        <div class="summary-total"><strong>Total</strong><strong id="sumTotal">₹0</strong></div>
+      </aside>
+
+    </div>
+  </div>
+
+  <script>
+(async function(){
+  //const API_BASE = 'http://localhost:4000';
+  const API_BASE = 'http://127.0.0.1:4000';
+
+
+  // small helpers
+  function formatRupee(n){ return "₹" + Number(n).toLocaleString("en-IN", { maximumFractionDigits: 0 }); }
+  function escapeHtml(s){ return String(s || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+  // read cart/totals from localStorage
+  let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  let totals = JSON.parse(localStorage.getItem("orderTotals") || '{"subtotal":0,"shipping":0,"total":0}');
+
+  // DOM elements (guarded)
+  const orderItemsEl = document.getElementById('orderItems');
+  const sumSubtotalEl = document.getElementById('sumSubtotal');
+  const sumShippingEl = document.getElementById('sumShipping');
+  const sumTotalEl = document.getElementById('sumTotal');
+  const checkoutForm = document.getElementById('checkoutForm');
+  const placeOrderBtn = document.getElementById('placeOrderBtn');
+  const formError = document.getElementById('formError');
+  const successMsg = document.getElementById('successMsg');
+  const upiArea = document.getElementById('upiArea');
+  const confirmUpiBtn = document.getElementById('confirmUpiBtn');
+  const cancelUpiBtn = document.getElementById('cancelUpiBtn');
+  const qrAmountEl = document.getElementById('qrAmount');
+  const upiIdText = document.getElementById('upiIdText');
+  const paymentRow = document.getElementById('paymentRow');
+  const radioLabels = paymentRow ? paymentRow.querySelectorAll('.radio') : [];
+
+  // render order items & totals
+  function renderOrder(){
+    if(orderItemsEl){
+      orderItemsEl.innerHTML = '';
+      if(!cart || cart.length === 0){
+        orderItemsEl.innerHTML = '<div class="muted">No items in cart.</div>';
+      } else {
+        cart.forEach(it=>{
+          const div = document.createElement('div');
+          div.className = 'order-item';
+          div.innerHTML = `
+            <div class="left">
+              ${ it.img ? `<img src="${escapeHtml(it.img)}" alt="">` : '' }
+              <div style="min-width:0">
+                <div class="oi-name">${escapeHtml(it.name || 'Item')}</div>
+                <div class="muted">Qty: ${it.qty || 1}</div>
+              </div>
+            </div>
+            <div class="oi-price">${formatRupee((it.price||0) * (it.qty || 1))}</div>
+          `;
+          orderItemsEl.appendChild(div);
+        });
+      }
+    }
+    if(sumSubtotalEl) sumSubtotalEl.textContent = formatRupee(totals.subtotal || 0);
+    if(sumShippingEl) sumShippingEl.textContent = formatRupee(totals.shipping || 0);
+    if(sumTotalEl) sumTotalEl.textContent = formatRupee(totals.total || 0);
+    if(qrAmountEl) qrAmountEl.textContent = formatRupee(totals.total || 0);
+  }
+  renderOrder();
+
+  // payment radio visuals
+  function clearActive(){ radioLabels.forEach(l=> l.classList && l.classList.remove('active')); }
+  radioLabels.forEach(label=>{
+    label.addEventListener('click', ()=>{
+      clearActive();
+      label.classList.add('active');
+      const val = label.dataset.val;
+      if(val === 'upi'){ if(upiArea) upiArea.style.display = 'block'; } else { if(upiArea) upiArea.style.display = 'none'; }
+    });
+  });
+  (function(){ if(!paymentRow) return; const checked = paymentRow.querySelector('input[name="pay"]:checked'); if(checked){ const lbl = checked.closest('.radio'); if(lbl) lbl.classList.add('active'); } })();
+
+  // Cancel UPI
+  if(cancelUpiBtn){
+    cancelUpiBtn.addEventListener('click', ()=>{
+      const cod = document.querySelector('input[name="pay"][value="cod"]');
+      if(cod) cod.checked = true;
+      clearActive();
+      const codLabel = document.querySelector('.radio[data-val="cod"]');
+      if(codLabel) codLabel.classList.add('active');
+      if(upiArea) upiArea.style.display = 'none';
+    });
+  }
+
+  // helper: post order to backend
+ /* async function postOrderToServer(payload){
+    const resp = await fetch(API_BASE + '/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    return resp.json();
+  }*/
+
+  async function postOrderToServer(payload){
+  const resp = await fetch(API_BASE + '/api/orders', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  return resp.json();
+}
+
+
+  
+
+
+
+  // Confirm UPI click: record payment with server
+  if(confirmUpiBtn){
+    confirmUpiBtn.addEventListener('click', async ()=>{
+      const created = JSON.parse(localStorage.getItem('latestOrder') || 'null');
+      if(!created || !created.orderId){
+        alert('Place order first, then confirm UPI payment.');
+        return;
+      }
+      try {
+        const payResp = await fetch(API_BASE + '/api/payments', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            order_id: created.orderId,
+            provider: 'UPI',
+            reference: 'UPI-TX-' + Date.now(),
+            amount: totals.total || 0,
+            status: 'success'
+          })
+        });
+        const jr = await payResp.json().catch(()=>null);
+        if(jr && jr.ok){
+          if(successMsg){
+            successMsg.style.display = 'block';
+            successMsg.textContent = 'Payment confirmed — your order is placed. Thank you!';
+          }
+          localStorage.removeItem('cart');
+          localStorage.removeItem('orderTotals');
+          localStorage.removeItem('latestOrder');
+          setTimeout(()=> location.href = 'index.html', 2200);
+        } else {
+          formError.textContent = 'Could not record payment. Try again.';
+        }
+      } catch (err) {
+        console.error(err);
+        formError.textContent = 'Network error while recording payment.';
+      }
+    });
+  }
+
+  // form submit -> create order on server
+  if(checkoutForm){
+    checkoutForm.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      if(formError) formError.textContent = '';
+      const name = (document.getElementById('name') || {}).value?.trim() || '';
+      const phone = (document.getElementById('phone') || {}).value?.trim() || '';
+      const address = (document.getElementById('address') || {}).value?.trim() || '';
+      const payMethod = (document.querySelector('input[name="pay"]:checked') || {}).value || 'cod';
+
+      if(!name || !phone || !address){ if(formError) formError.textContent = 'Please fill name, phone and address.'; return; }
+      if(!/^\d{10}$/.test(phone)){ if(formError) formError.textContent = 'Enter a valid 10-digit phone number.'; return; }
+      if(!cart || cart.length === 0){ if(formError) formError.textContent = 'Your cart is empty.'; return; }
+
+      const cartPayload = cart.map(it => ({ product_id: it.id || it.product_id || null, name: it.name, qty: it.qty || 1, unit_price: it.price || it.unit_price || 0 }));
+
+      const payload = {
+        customer_name: name,
+        customer_phone: phone,
+        customer_address: address,
+        payment_method: (payMethod === 'upi' ? 'UPI' : 'COD'),
+        paid: 0,
+        cart: cartPayload,
+        subtotal: totals.subtotal || 0,
+        shipping: totals.shipping || 0,
+        total: totals.total || 0
+      };
+
+      try {
+        placeOrderBtn.disabled = true;
+        placeOrderBtn.textContent = 'Placing...';
+        const result = await postOrderToServer(payload);
+        if(result && result.ok){
+          localStorage.setItem('latestOrder', JSON.stringify({ orderId: result.orderId, orderNo: result.orderNo }));
+          if(payMethod === 'upi'){
+            if(upiArea) upiArea.style.display = 'block';
+            const panel = document.getElementById('qrPanel');
+            if(panel) panel.scrollIntoView({ behavior:'smooth' });
+            placeOrderBtn.textContent = 'Awaiting UPI payment...';
+            placeOrderBtn.disabled = false;
+          } else {
+            if(successMsg){
+              successMsg.style.display = 'block';
+              successMsg.textContent = 'Order placed (Cash on Delivery). Thank you!';
+            }
+            localStorage.removeItem('cart');
+            localStorage.removeItem('orderTotals');
+            localStorage.removeItem('latestOrder');
+            setTimeout(()=> location.href = 'index.html', 2200);
+          }
+        } else {
+          formError.textContent = (result && result.error) ? result.error : 'Could not place order.';
+          placeOrderBtn.disabled = false;
+          placeOrderBtn.textContent = 'Place Order';
+        }
+      } catch (err) {
+        console.error(err);
+        formError.textContent = 'Network error when placing order.';
+        placeOrderBtn.disabled = false;
+        placeOrderBtn.textContent = 'Place Order';
+      }
+    });
+  }
+
+  // prefill profile
+  const profile = JSON.parse(localStorage.getItem('profile') || '{}');
+  if(profile.name){ const el = document.getElementById('name'); if(el) el.value = profile.name; }
+  if(profile.phone){ const el = document.getElementById('phone'); if(el) el.value = profile.phone; }
+  if(profile.address){ const el = document.getElementById('address'); if(el) el.value = profile.address; }
+
+  if(upiIdText) upiIdText.textContent = 'petcare@upi';
+
+})();
+  </script>
+</body>
+</html>
